@@ -6,18 +6,21 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+stages:
+- stage: Deploy
+  displayName: Deploy stage
+  jobs:
+  - deployment: deploymentGroup
+    displayName: VM deployment
+    environment: 'Fabrikam.DevMachines'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo Hello, world!
+            displayName: 'Run a one-line script'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-- task: AzurePowerShell@4
-  inputs:
-    azureSubscription: 'RMPM-New'
-    ScriptType: 'InlineScript'
+          - script: |
+              echo Add other tasks to build, test, and deploy your project.
+              echo See https://aka.ms/yaml
+            displayName: 'Run a multi-line script'
