@@ -1,20 +1,10 @@
-resources:
-  - repo: self
+jobs:
+- job: A
+  steps:
+  - script: echo hello
 
-trigger:
-  - master
-
-stages:
-- stage: Deploy
-  displayName: Deploy artifact
-  jobs:
-  - deployment: deploy
-    displayName: Deploy artifact to the maven repo
-    environment: 'Development'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - script: ls
-            displayName: Publish decode package
-
+- job: B
+  dependsOn: A
+  condition: and(succeededwithwarnings(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+  steps:
+  - script: echo this only runs for master
