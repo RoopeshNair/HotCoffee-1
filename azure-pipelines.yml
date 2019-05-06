@@ -5,6 +5,6 @@ jobs:
 
 - job: B
   dependsOn: A
-  condition: and(succeededwithwarnings(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+  condition: and(partiallySucceeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
   steps:
   - script: echo this only runs for master
