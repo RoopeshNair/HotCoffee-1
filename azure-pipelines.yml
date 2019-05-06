@@ -1,10 +1,17 @@
 jobs:
 - job: A
   steps:
-  - script: echo hello
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: '# Write your powershell commands here.
+        
+        throw error e
+        
+        Write-Host "Hello World" '
 
 - job: B
   dependsOn: A
-  condition: and(partiallySucceeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+  condition: and(failed(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
   steps:
   - script: echo this only runs for master
