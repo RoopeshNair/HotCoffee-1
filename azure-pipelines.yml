@@ -12,6 +12,6 @@ jobs:
 
 - job: B
   dependsOn: A
-  condition: and(failed(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+  condition: and(SucceededWithIssues(A), eq(variables['build.sourceBranch'], 'refs/heads/master'))
   steps:
   - script: echo this only runs for master
