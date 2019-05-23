@@ -18,3 +18,10 @@ jobs:
     )
   steps:
   - script: Job C
+- deployment: 
+  environment: test
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - script: echo hello world
